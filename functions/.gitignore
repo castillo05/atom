@@ -33,3 +33,16 @@ node_modules/
 
 # Service account credentials
 config/service-account.json
+
+# Firebase configuration files
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
+database.rules.json
+
+# Scripts and generated files
+src/scripts/
+public/
+dist/
+build/
