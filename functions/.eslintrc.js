@@ -19,6 +19,8 @@ module.exports = {
   },
   ignorePatterns: [
     '/lib/**/*', // Ignore built files.
+    '/coverage/**/*', // Ignore coverage reports
+    '*.js', // Ignore JavaScript config files
   ],
   plugins: [
     '@typescript-eslint',
