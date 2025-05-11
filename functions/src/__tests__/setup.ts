@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin';
 
-// Inicializar Firebase Admin para las pruebas solo si no está inicializado
+// Initialize Firebase Admin for tests only if not already initialized
 if (!admin.apps.length) {
   admin.initializeApp({
     projectId: 'test-project',
@@ -12,7 +12,7 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-// Limpiar después de todas las pruebas
+// Clean up after all tests
 afterAll(async () => {
   if (admin.apps.length) {
     await admin.app().delete();

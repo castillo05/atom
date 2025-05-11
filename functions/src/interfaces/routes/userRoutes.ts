@@ -16,7 +16,7 @@ export const createUserRoutes = (userRepository: IUserRepository): Router => {
       const { uid, email } = req.body;
       if (!uid || !email) {
         res.status(400).json({
-          error: 'Se requieren los campos uid y email'
+          error: 'uid and email fields are required'
         });
         return;
       }
@@ -27,9 +27,9 @@ export const createUserRoutes = (userRepository: IUserRepository): Router => {
 
       res.json({ token });
     } catch (error) {
-      console.error('Error detallado al generar token:', error);
+      console.error('Detailed error generating token:', error);
       res.status(500).json({
-        error: 'Error al generar el token de autenticación',
+        error: 'Error generating authentication token',
         details: error instanceof Error ? error.message : 'Error desconocido'
       });
     }
