@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UserService } from '../../../data/services/user.service';
 import { AuthService } from '../../../data/services/auth.service';
 import { CreateUserDialogComponent } from '../create-user-dialog/create-user-dialog.component';
@@ -20,13 +21,15 @@ import { v4 as uuidv4 } from 'uuid';
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
-        MatDialogModule
+        MatDialogModule,
+        MatProgressSpinnerModule
     ],
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
     loginForm: FormGroup;
+    isLoading = false;
 
     constructor(
         private fb: FormBuilder,
@@ -42,6 +45,7 @@ export class LoginComponent {
 
     onSubmit() {
         if (this.loginForm.valid) {
+            this.isLoading = true;
             const email = this.loginForm.get('email')?.value;
             const tempUserId = uuidv4(); // Generate a temporary ID
 
@@ -66,13 +70,19 @@ export class LoginComponent {
                                         localStorage.setItem('userId', user.id);
                                         this.router.navigate(['/tasks']);
                                     });
+                                } else {
+                                    this.isLoading = false;
                                 }
                             });
+                        },
+                        complete: () => {
+                            this.isLoading = false;
                         }
                     });
                 },
                 error: (error) => {
-                    console.error('Error al generar token:', error);
+                    console.error('Error generating token:', error);
+                    this.isLoading = false;
                 }
             });
         }
