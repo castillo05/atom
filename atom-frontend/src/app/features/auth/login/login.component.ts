@@ -43,19 +43,19 @@ export class LoginComponent {
     onSubmit() {
         if (this.loginForm.valid) {
             const email = this.loginForm.get('email')?.value;
-            const tempUserId = uuidv4(); // Generamos un ID temporal
+            const tempUserId = uuidv4(); // Generate a temporary ID
 
-            // Primero generamos el token
+            // First generate the token
             this.authService.generateToken(tempUserId, email).subscribe({
                 next: () => {
-                    // Una vez que tenemos el token, intentamos encontrar al usuario
+                    // Once we have the token, try to find the user
                     this.userService.findByEmail(email).subscribe({
                         next: (user) => {
                             localStorage.setItem('userId', user.id);
                             this.router.navigate(['/tasks']);
                         },
                         error: () => {
-                            // Si el usuario no existe, mostramos el diálogo de creación
+                            // If user doesn't exist, show creation dialog
                             const dialogRef = this.dialog.open(CreateUserDialogComponent, {
                                 data: { email }
                             });

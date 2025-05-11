@@ -1,18 +1,18 @@
 <div class="login-container">
-    <h1>Bienvenido</h1>
+    <h1>Welcome</h1>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="fill">
-            <mat-label>Correo electrónico</mat-label>
+            <mat-label>Email</mat-label>
             <input matInput type="email" formControlName="email" required>
             <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
-                El correo es requerido
+                Email is required
             </mat-error>
             <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
-                Ingrese un correo válido
+                Please enter a valid email
             </mat-error>
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
-            Ingresar
+            Sign In
         </button>
     </form>
-</div> 
+</div>  
