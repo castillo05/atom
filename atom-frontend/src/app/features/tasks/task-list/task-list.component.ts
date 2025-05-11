@@ -80,7 +80,7 @@ export class TaskListComponent implements OnInit {
     }
 
     deleteTask(task: Task) {
-        if (confirm('¿Estás seguro de que deseas eliminar esta tarea?')) {
+        if (confirm('Are you sure you want to delete this task?')) {
             this.taskService.delete(task.id).subscribe(() => {
                 this.loadTasks();
             });
