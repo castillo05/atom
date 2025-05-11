@@ -23,23 +23,48 @@ export const authenticate = async (
     }
 
     const token = authHeader.split('Bearer ')[1];
+
+    // Intentamos verificar como token de ID
     try {
-      // Intentamos verificar como token de ID
       const decodedToken = await admin.auth().verifyIdToken(token);
-      req.user = decodedToken;
+      Object.assign(req, { user: decodedToken });
+      next();
+      return;
     } catch (idTokenError) {
-      // Si falla, asumimos que es un token personalizado válido
-      // ya que fue generado por nuestro endpoint /generate-token
-      const payloadB64 = token.split('.')[1];
-      const payload = JSON.parse(Buffer.from(payloadB64, 'base64').toString());
-      req.user = {
-        uid: payload.uid,
-        email: payload.claims?.email
-      };
+      // Si falla, intentamos verificar como token personalizado
+      try {
+        const parts = token.split('.');
+        if (parts.length !== 3) {
+          throw new AppError(401, 'Invalid token format');
+        }
+
+        const payloadB64 = parts[1];
+        const payload = JSON.parse(Buffer.from(payloadB64, 'base64').toString());
+
+        if (!payload.uid) {
+          throw new AppError(401, 'Invalid token payload');
+        }
+
+        Object.assign(req, {
+          user: {
+            uid: payload.uid,
+            email: payload.claims?.email
+          }
+        });
+        next();
+        return;
+      } catch (customTokenError) {
+        if (customTokenError instanceof AppError) {
+          throw customTokenError;
+        }
+        throw new AppError(401, 'Invalid token');
+      }
     }
-    next();
   } catch (error) {
-    console.error('Error de autenticación:', error);
-    next(new AppError(401, 'Invalid token'));
+    if (error instanceof AppError) {
+      next(error);
+    } else {
+      next(new AppError(401, 'Invalid token'));
+    }
   }
 };
