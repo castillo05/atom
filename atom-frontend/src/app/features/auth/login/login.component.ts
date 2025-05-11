@@ -22,52 +22,8 @@ import { v4 as uuidv4 } from 'uuid';
         MatButtonModule,
         MatDialogModule
     ],
-    template: `
-        <div class="login-container">
-            <h1>Bienvenido</h1>
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <mat-form-field appearance="fill">
-                    <mat-label>Correo electrónico</mat-label>
-                    <input matInput type="email" formControlName="email" required>
-                    <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
-                        El correo es requerido
-                    </mat-error>
-                    <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
-                        Ingrese un correo válido
-                    </mat-error>
-                </mat-form-field>
-                <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
-                    Ingresar
-                </button>
-            </form>
-        </div>
-    `,
-    styles: [`
-        .login-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            padding: 20px;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 300px;
-            gap: 20px;
-        }
-
-        mat-form-field {
-            width: 100%;
-        }
-
-        button {
-            width: 100%;
-        }
-    `]
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
     loginForm: FormGroup;

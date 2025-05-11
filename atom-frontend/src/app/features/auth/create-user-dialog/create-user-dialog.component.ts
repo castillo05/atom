@@ -7,16 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
     selector: 'app-create-user-dialog',
     standalone: true,
     imports: [CommonModule, MatDialogModule, MatButtonModule],
-    template: `
-        <h2 mat-dialog-title>Crear nuevo usuario</h2>
-        <mat-dialog-content>
-            ¿Deseas crear un nuevo usuario con el correo {{data.email}}?
-        </mat-dialog-content>
-        <mat-dialog-actions align="end">
-            <button mat-button (click)="onNoClick()">Cancelar</button>
-            <button mat-raised-button color="primary" [mat-dialog-close]="true">Crear</button>
-        </mat-dialog-actions>
-    `
+    templateUrl: './create-user-dialog.component.html'
 })
 export class CreateUserDialogComponent {
     constructor(

@@ -18,45 +18,8 @@ import { Task } from '../../../data/models/task.model';
         MatInputModule,
         MatButtonModule
     ],
-    template: `
-        <h2 mat-dialog-title>{{data.id ? 'Editar' : 'Nueva'}} Tarea</h2>
-        <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-            <mat-dialog-content>
-                <mat-form-field appearance="fill">
-                    <mat-label>Título</mat-label>
-                    <input matInput formControlName="title" required>
-                    <mat-error *ngIf="taskForm.get('title')?.hasError('required')">
-                        El título es requerido
-                    </mat-error>
-                </mat-form-field>
-
-                <mat-form-field appearance="fill">
-                    <mat-label>Descripción</mat-label>
-                    <textarea matInput formControlName="description" rows="4" required></textarea>
-                    <mat-error *ngIf="taskForm.get('description')?.hasError('required')">
-                        La descripción es requerida
-                    </mat-error>
-                </mat-form-field>
-            </mat-dialog-content>
-
-            <mat-dialog-actions align="end">
-                <button mat-button (click)="onNoClick()">Cancelar</button>
-                <button mat-raised-button color="primary" type="submit" [disabled]="taskForm.invalid">
-                    {{data.id ? 'Actualizar' : 'Crear'}}
-                </button>
-            </mat-dialog-actions>
-        </form>
-    `,
-    styles: [`
-        mat-form-field {
-            width: 100%;
-            margin-bottom: 16px;
-        }
-
-        mat-dialog-content {
-            min-width: 300px;
-        }
-    `]
+    templateUrl: './task-form-dialog.component.html',
+    styleUrls: ['./task-form-dialog.component.scss']
 })
 export class TaskFormDialogComponent {
     taskForm: FormGroup;

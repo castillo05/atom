@@ -21,83 +21,8 @@ import { TaskFormDialogComponent } from '../task-form-dialog/task-form-dialog.co
         MatIconModule,
         MatDialogModule
     ],
-    template: `
-        <div class="task-list-container">
-            <div class="header">
-                <h1>Mis Tareas</h1>
-                <div class="actions">
-                    <button mat-raised-button color="primary" (click)="openTaskDialog()">
-                        <mat-icon>add</mat-icon>
-                        Nueva Tarea
-                    </button>
-                    <button mat-raised-button color="warn" (click)="logout()">
-                        <mat-icon>exit_to_app</mat-icon>
-                        Salir
-                    </button>
-                </div>
-            </div>
-
-            <div class="tasks">
-                <mat-card *ngFor="let task of tasks">
-                    <mat-card-header>
-                        <mat-card-title>{{task.title}}</mat-card-title>
-                        <mat-card-subtitle>Creada: {{task.createdAt | date}}</mat-card-subtitle>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <p>{{task.description}}</p>
-                    </mat-card-content>
-                    <mat-card-actions>
-                        <mat-checkbox
-                            [checked]="task.completed"
-                            (change)="toggleTaskStatus(task)">
-                            {{task.completed ? 'Completada' : 'Pendiente'}}
-                        </mat-checkbox>
-                        <button mat-icon-button color="primary" (click)="openTaskDialog(task)">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                        <button mat-icon-button color="warn" (click)="deleteTask(task)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </mat-card-actions>
-                </mat-card>
-            </div>
-        </div>
-    `,
-    styles: [`
-        .task-list-container {
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .tasks {
-            display: grid;
-            gap: 20px;
-        }
-
-        mat-card {
-            margin-bottom: 16px;
-        }
-
-        mat-card-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 16px;
-        }
-    `]
+    templateUrl: './task-list.component.html',
+    styleUrls: ['./task-list.component.scss']
 })
 export class TaskListComponent implements OnInit {
     tasks: Task[] = [];
@@ -165,5 +90,9 @@ export class TaskListComponent implements OnInit {
     logout() {
         localStorage.removeItem('userId');
         this.router.navigate(['/login']);
+    }
+
+    trackByTaskId(index: number, task: Task): string {
+        return task.id;
     }
 } 
